@@ -1,0 +1,92 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block title %} Cash Flow Generator {% endblock %}
+
+{% block content %}
+<body>
+  <div class="container">
+  <h1 class="heading">Cash Flow Generator </h1>
+    <hr>
+    <form action = {{url_for('home')}} method="POST" >
+        <div class="row">
+          <h3 class="col"> Project Name </h3>
+          <h3 class="col"> Project Value </h3>
+          <h3 class="col"> Project Start </h3>
+          <h3 class="col"> Project End </h3>
+          <h3 class="col"> Curve Type </h3>
+        </div>
+
+      {{ form.hidden_tag() }}
+      {% for project in form.projects %}
+      <div class="row" >
+        <div class="col form-group"> {{ project.project_name(class="form-control") }} </div>
+        <div class="col form-group"> {{ project.project_value(class="form-control", placeholder="$") }} </div>
+        <div class="col form-group"> {{ project.project_start(class="form-control") }} </div>
+        <div class="col form-group"> {{ project.project_end(class="form-control") }} </div>
+        <div class="col form-group"> {{ project.distribution(class="form-control") }} </div>
+
+      </div>
+      {% endfor %}
+
+<!--{% for field in form.errors %}-->
+<!--{% for error in form.errors[field] %}-->
+<!--    <div class="alert alert-error">-->
+<!--        <strong>Error!</strong> {{error}}-->
+<!--    </div>-->
+<!--{% endfor %}-->
+<!--{% endfor %}-->
+
+
+          {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-msg">
+        {%for message in messages%}
+        {{ message }},
+        {%endfor%}
+    </div>
+{% endif %}
+{% endwith %}
+
+<!--        {% if form.errors %}-->
+<!--        {% for k,v in form.errors['projects'][0].items() %}-->
+<!--            <div class="alert alert-error">-->
+<!--        <strong>Error!</strong> {{ k}} : {{v[0]}}-->
+<!--    </div>-->
+<!--        {% endfor %}-->
+<!--        {% endif %}-->
+
+      {{ form.submit(class="btn btn-primary btn-lg") }}
+      {{ form.add(class="btn btn-secondary btn-lg") }}
+      {{ form.restart(class="btn btn-secondary btn-lg") }}
+    </form>
+    </div>
+
+
+    {% if table %}
+  <div class="container">
+    <hr>
+    <div > {{table | safe}}</div>
+    <a href = {{url_for('download', filename="df.csv") }} ><button class="download btn btn-light btn-block"> Download CSV </button></a>
+  </div>
+
+
+  <img class="mx-auto d-block"  src={{url_for('static',filename='images/chart.png')}}>
+    {% endif %}
+
+
+
+
+</body>
+
+
+{% endblock %}

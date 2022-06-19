@@ -1,0 +1,45 @@
+
+body {margin-top:3%}
+
+h3 {padding-bottom:10px}
+
+hr {padding-bottom:50px;
+padding-top:20px}
+
+img {
+max-width: 100%;
+height: auto;
+}
+
+.form-control {font-size:1.5rem;
+margin-bottom:2rem}
+
+select.form-control{height:34px!important;
+}
+
+.btn {float:right;
+margin-left:10px;
+marg
+font-size:1.5rem;
+margin-bottom:50px;
+}
+
+.table {border-width:0;
+margin-top:20px;
+font-size:1.5rem;
+text-align:left}
+
+.borderless td, .borderless th {
+    border: none;}
+
+.download {margin-left:auto;
+font-size:1.5rem;
+margin-right:auto;
+margin-top:20px}
+
+.flash-msg {color:red;
+font-size:1.3rem}
+
+
+
+
