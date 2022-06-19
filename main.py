@@ -63,8 +63,7 @@ def home():
             # combine and process all dataframes in the projects_dfs
             table_df = pd.concat(project_dfs.values(), axis=1).fillna(0).assign(Monthly_Total = lambda x : x.sum(1))
             table_df['Cum_Monthly'] = table_df['Monthly_Total'].cumsum()
-            remove('static/df.csv')
-            table_df.to_csv('static/df.csv')
+            table_df.to_csv('tmp/df.csv')
             plot_chart()
 
             # process the combined dataframe to html

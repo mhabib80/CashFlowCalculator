@@ -31,7 +31,7 @@ def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=Non
 
 
 def plot_chart():
-    df = pd.read_csv('static/df.csv', index_col=[0])
+    df = pd.read_csv('tmp/df.csv', index_col=[0])
     ax = df.iloc[:, :-2].plot(kind='bar', stacked=True, figsize=(20, 15),
                               color=['#06283D', '#1363DF', '#47B5FF', '#FF6D02', '#7577CD'])
     ax2 = df['Cum_Monthly'].plot(c='red', ax=ax, secondary_y=True, legend=True, label='Cum_Monthly')
