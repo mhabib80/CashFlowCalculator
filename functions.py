@@ -23,7 +23,7 @@ def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=Non
     cum_earnings = (x * contract_amount).ravel()
     data = pd.DataFrame(cum_earnings, index=date_range, columns=['cum_earnings'])
     data.iloc[0] = 0
-    data.iloc[-1] = contract_amount  # last period should be 100% contract amount
+    # data.iloc[-1] = contract_amount  # last period should be 100% contract amount
     output = data.resample('M').cum_earnings.max().astype(int).to_frame()
     output[p_name + '_Monthly'] = output['cum_earnings'].diff().fillna(output['cum_earnings']) #so 1st period won't be NaN
     output.drop('cum_earnings', inplace=True, axis=1)
@@ -31,7 +31,7 @@ def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=Non
 
 
 def plot_chart():
-    df = pd.read_csv('static/files/df.csv', index_col=[0])
+    df = pd.read_csv('static/df.csv', index_col=[0])
     ax = df.iloc[:, :-2].plot(kind='bar', stacked=True, figsize=(20, 15),
                               color=['#06283D', '#1363DF', '#47B5FF', '#FF6D02', '#7577CD'])
     ax2 = df['Cum_Monthly'].plot(c='red', ax=ax, secondary_y=True, legend=True, label='Cum_Monthly')
