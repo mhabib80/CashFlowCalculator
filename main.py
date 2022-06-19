@@ -62,22 +62,17 @@ def home():
             # combine and process all dataframes in the projects_dfs
             table_df = pd.concat(project_dfs.values(), axis=1).fillna(0).assign(Monthly_Total = lambda x : x.sum(1))
             table_df['Cum_Monthly'] = table_df['Monthly_Total'].cumsum()
-            table_df.to_csv('static/files/df.csv')
+            table_df.to_csv('static/df.csv')
             plot_chart()
 
             # process the combined dataframe to html
             table = table_df.applymap(lambda x: f'${x:,.0f}')\
                 .to_html(classes='table table-striped borderless', justify='left')
         else:
-            print(form.errors)
-            # print(form.errors['projects'][0])
             for k,v in form.errors['projects'][0].items():
                 flash(f'{k}: {v[0]}')
 
-
     return render_template('index.html', form = form, table=table)
-
-
 
 
 

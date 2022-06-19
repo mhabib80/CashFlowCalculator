@@ -38,7 +38,7 @@ def plot_chart():
     ax.legend(loc='upper left', frameon=False, ncol=len(df.columns))
     ax.get_yaxis().set_major_formatter(ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
     ax2.get_yaxis().set_major_formatter(ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
-    plt.savefig('static/images/chart.png')
+    plt.savefig('static/chart.png')
 
 
 # Set Matplot parameters
