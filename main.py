@@ -75,7 +75,7 @@ def home():
                 flash(f'{k}: {v[0]}')
 
 
-    return render_template('home.html', form = form, table=table)
+    return render_template('index.html', form = form, table=table)
 
 
 
