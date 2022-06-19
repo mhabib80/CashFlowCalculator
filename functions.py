@@ -1,29 +1,20 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 from matplotlib import ticker
 
-#sample_earnings_1:  m=7.254821003276175, b=-3.6231848582614825
-#saple_earnings_2: m=7.224237364974917, b=-3.4206895174692287
 
 def sigmoid(x, k=3.627412246682911, b=-0.001164921989173435):
   return 1 / (1 + np.exp(-k*(x-b)))
 
 
 def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=None):
-    # contract_amount = float(contract_amount)
-    # start_date = pd.to_datetime(start_date)
-    # completion_date = pd.to_datetime(completion_date)
 
     date_range = pd.date_range(start_date, completion_date, freq='d')  # date range per day
     dur = (date_range.max() - date_range.min()).days
 
-    # ordinal_date_range = pd.Series(date_range).apply(lambda x: x.toordinal()).values  # convert dates to ordinal days
-    # ordinal_scaled = MinMaxScaler().fit_transform(ordinal_date_range.reshape(-1, 1))  # scale days
-
     if curve == 'trapezoidal':
-        sigmoid_input = np.linspace(-1.1, 1.1, dur + 1)
+        sigmoid_input = np.linspace(-1.1, 1.1, dur + 1) #adjust the x values to better fit the S-Curve function
         x = sigmoid(sigmoid_input)
 
     else:

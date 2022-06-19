@@ -1,4 +1,3 @@
-import pandas as pd
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import *
@@ -12,6 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ljyhfjfkjfjfou7867856'
 Bootstrap(app)
 csrf = CSRFProtect(app)
+
 
 # Create Forms
 def validate_date(form, field):
