@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, sen
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
 from functions import *
+from os import remove
 
 
 app = Flask(__name__)
@@ -62,6 +63,7 @@ def home():
             # combine and process all dataframes in the projects_dfs
             table_df = pd.concat(project_dfs.values(), axis=1).fillna(0).assign(Monthly_Total = lambda x : x.sum(1))
             table_df['Cum_Monthly'] = table_df['Monthly_Total'].cumsum()
+            remove('static/df.csv')
             table_df.to_csv('static/df.csv')
             plot_chart()
 
@@ -75,10 +77,9 @@ def home():
     return render_template('index.html', form = form, table=table)
 
 
-
 @app.route('/download/<path:filename>')
 def download(filename):
-    return send_from_directory('static/files', filename)
+    return send_from_directory('static', filename)
 
 
 
