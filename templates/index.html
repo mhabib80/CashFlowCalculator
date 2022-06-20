@@ -76,11 +76,10 @@
   <div class="container">
     <hr>
     <div > {{table | safe}}</div>
-    <a href = {{url_for('download', filename="df.csv") }} ><button class="download btn btn-light btn-block"> Download CSV </button></a>
+    <a href = {{url_for('download', filename='df.csv') }} ><button class="download btn btn-light btn-block"> Download CSV </button></a>
   </div>
 
-
-  <img class="mx-auto d-block"  src={{url_for('static',filename='chart.png')}}>
+  <img class="mx-auto d-block"  src="/tmp/chart.png">
     {% endif %}
 
 
