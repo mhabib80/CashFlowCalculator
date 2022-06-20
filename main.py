@@ -11,7 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plt_params
 from matplotlib import ticker
-import tempfile
+import io
+import base64
 
 
 app = Flask(__name__)
@@ -45,6 +46,7 @@ def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=Non
 
 
 def plot_chart():
+
     df = pd.read_csv('/tmp/df.csv', index_col=[0])
     ax = df.iloc[:, :-2].plot(kind='bar', stacked=True, figsize=(20, 15),
                               color=['#06283D', '#1363DF', '#47B5FF', '#FF6D02', '#7577CD'])
@@ -52,7 +54,13 @@ def plot_chart():
     ax.legend(loc='upper left', frameon=False, ncol=len(df.columns))
     ax.get_yaxis().set_major_formatter(ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
     ax2.get_yaxis().set_major_formatter(ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
-    plt.savefig('/tmp/chart.png')
+
+    img = io.BytesIO()
+    plt.savefig(img, format = 'png')
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(img.getvalue()).decode('utf8')
+    return pngImageB64String
+
 
 
 # Create Forms
@@ -84,6 +92,7 @@ project_dfs = {}
 @app.route('/', methods=['POST', 'GET'])
 def home():
     table = None
+    img = None
     form = Projects(request.form)
     if request.form.get('add'):
         form.projects.append_entry()
@@ -105,16 +114,16 @@ def home():
             table_df = pd.concat(project_dfs.values(), axis=1).fillna(0).assign(Monthly_Total = lambda x : x.sum(1))
             table_df['Cum_Monthly'] = table_df['Monthly_Total'].cumsum()
             table_df.to_csv('/tmp/df.csv')
-            plot_chart()
-
+            img = plot_chart()
             # process the combined dataframe to html
             table = table_df.applymap(lambda x: f'${x:,.0f}')\
                 .to_html(classes='table table-striped borderless', justify='left')
+
         else:
             for k,v in form.errors['projects'][0].items():
                 flash(f'{k}: {v[0]}')
 
-    return render_template('index.html', form = form, table=table)
+    return render_template('index.html', form = form, table=table, img = img)
 
 
 @app.route('/download/<path:filename>')
