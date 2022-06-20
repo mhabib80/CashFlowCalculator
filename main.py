@@ -101,6 +101,7 @@ def home():
         return redirect(url_for('home'))
     # if request.form.get('delete'):
     #     print(request.form.to_dict())
+
     if request.method == 'POST':
         if form.validate_on_submit():
             for project in form.projects.data:
@@ -114,10 +115,11 @@ def home():
             table_df = pd.concat(project_dfs.values(), axis=1).fillna(0).assign(Monthly_Total = lambda x : x.sum(1))
             table_df['Cum_Monthly'] = table_df['Monthly_Total'].cumsum()
             table_df.to_csv('/tmp/df.csv')
-            img = plot_chart()
-            # process the combined dataframe to html
+
+            # process the combined dataframe to html and pass image
             table = table_df.applymap(lambda x: f'${x:,.0f}')\
                 .to_html(classes='table table-striped borderless', justify='left')
+            img = plot_chart()
 
         else:
             for k,v in form.errors['projects'][0].items():
