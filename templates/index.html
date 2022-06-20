@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
 
-{% block title %} Cash Flow Generator {% endblock %}
+{% block title %} Cash Flow Calculator {% endblock %}
 
 {% block content %}
 <body>
   <div class="container">
-  <h1 class="heading">Cash Flow Generator </h1>
+  <h1 class="heading">Cash Flow Calculator </h1>
     <hr>
     <form action = {{url_for('home')}} method="POST" >
         <div class="row">
