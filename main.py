@@ -38,7 +38,7 @@ def curve(p_name, contract_amount, start_date, completion_date,  curve, csrf=Non
     cum_earnings = (x * contract_amount).ravel()
     data = pd.DataFrame(cum_earnings, index=date_range, columns=['cum_earnings'])
     data.iloc[0] = 0
-    # data.iloc[-1] = contract_amount  # last period should be 100% contract amount
+    data.iloc[-1] = contract_amount  # last period should be 100% contract amount
     output = data.resample('M').cum_earnings.max().astype(int).to_frame()
     output[p_name + '_Monthly'] = output['cum_earnings'].diff().fillna(output['cum_earnings']) #so 1st period won't be NaN
     output.drop('cum_earnings', inplace=True, axis=1)
