@@ -74,7 +74,7 @@ class SingleProject(FlaskForm):
     project_end = DateField('Project End Date', validators=[DataRequired(), validate_date])
     distribution = SelectField('Curve Type', choices=[('linear', 'Linear'), ('trapezoidal', 'Trapezoidal(S-Curve)')],
                                validators=[DataRequired()])
-    # delete = SubmitField('Remove Project')
+
 
 
 class Projects(FlaskForm):
@@ -92,13 +92,13 @@ def home():
     table = None
     img = None
     form = Projects(request.form)
+
     if request.form.get('add'):
         form.projects.append_entry()
+
     if request.form.get('restart'):
         form = Projects()
         return redirect(url_for('home'))
-    # if request.form.get('delete'):
-    #     print(request.form.to_dict())
 
     if request.method == 'POST':
         if form.validate_on_submit():
