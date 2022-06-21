@@ -4,8 +4,6 @@ from wtforms.validators import *
 from flask import Flask, render_template, redirect, url_for, flash, request, send_from_directory
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
-import tempfile
-import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
