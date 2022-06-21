@@ -11,10 +11,11 @@ import plt_params
 from matplotlib import ticker
 import io
 import base64
+import os
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ljyhfjfkjfjfou7867856'
+app.config['SECRET_KEY'] = os.environ.get('flask_key')
 Bootstrap(app)
 csrf = CSRFProtect(app)
 
